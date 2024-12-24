@@ -11,8 +11,8 @@ ListenPort = 6767
 PrivateKey = $(wg genkey)
 
 # NAT for clients
-PostUp = iptables -A FORWARD -i wg0 -j ACCEPT ; iptables -t nat -A POSTROUTING -o ens192 -j MASQUERADE
-PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o ens192 -j MASQUERADE
+PostUp = iptables -I FORWARD -i wg0 -j ACCEPT; iptables -I FORWARD -o wg0 -j ACCEPT ; iptables -I FORWARD -i wg0 -j ACCEPT ; iptables -t nat -I POSTROUTING -o enp0s6 -j MASQUERADE
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -D FORWARD -o wg0 -j ACCEPT ; iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o enp0s6 -j MASQUERADE
 
 # CLIENT 1
 [Peer]
